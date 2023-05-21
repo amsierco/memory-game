@@ -1,2 +1,2 @@
-# memory_game
+# memory-game
 A memory game to practice react and hooks
