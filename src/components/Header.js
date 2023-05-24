@@ -3,9 +3,11 @@ import React from "react";
 const Header = ({score, highScore}) => {
     return (
       <div className="header">
-        <div className="directions">Don't Click The Same Card Twice!</div>
-        <div className="score">Score: {score}</div>
-        <div className="high-score">High Score: {highScore}</div>
+        <h1 className="directions">Don't Click The Same Card Twice!</h1>
+        <div className="details">
+          <h3 className="score">Score: {score}</h3>
+          <h3 className="high-score">High Score: {highScore}</h3>
+        </div>
       </div>  
     );
 }

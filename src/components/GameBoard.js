@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Header from './Header';
 import GameOver from './GameOver';
 import Card from './Card';
@@ -28,7 +28,9 @@ const GameBoard = (() => {
         }
         let updatedScore = score + 1;
         setScore(score => score + 1);
-        setHighScore(updatedScore);
+        if(updatedScore > highScore){
+            setHighScore(updatedScore);
+        }
         updateDeck(shuffle(data));
     }
 
@@ -43,9 +45,11 @@ const GameBoard = (() => {
             <Header score={score} highScore={highScore} />
             {
             !gameOver ?
-                <div className='deck'>{deck.map(el => {
+                <div className='deck'>
+                    {deck.map(el => {
                     return <Card image={el.image} text={el.text} takeTurn={takeTurn} key={el.id}/>
-                })}</div>
+                    })}
+                </div>
             : 
                 <GameOver score={score} highScore={highScore} reset={reset}
             />}
