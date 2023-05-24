@@ -9,11 +9,7 @@ const GameBoard = (() => {
     const [score, setScore] = useState(0);
     const [highScore, setHighScore] = useState(0);
     const [gameOver, endGame] = useState(false);
-
-    let initDeck = data.map(el => {
-        return <Card image={el.image} text={el.text} takeTurn={takeTurn} key={el.id}/>
-    })
-    const [deck, updateDeck] = useState(initDeck);
+    const [deck, updateDeck] = useState(data);
 
     function shuffle(array){
         for (let i = array.length - 1; i > 0; i--) {
@@ -30,32 +26,26 @@ const GameBoard = (() => {
             endGame(true);
             return;
         }
+        let updatedScore = score + 1;
         setScore(score => score + 1);
-        let temp = shuffle(data).map(el => {
-            return <Card image={el.image} text={el.text} takeTurn={takeTurn} key={el.id}/>
-        })
-        updateDeck(temp);
+        setHighScore(updatedScore);
+        updateDeck(shuffle(data));
     }
 
     function reset(){
         endGame(false);
         setScore(0);
-        let temp = shuffle(data).map(el => {
-            return <Card image={el.image} text={el.text} takeTurn={takeTurn} key={el.id}/>
-        })
-        updateDeck(temp);
+        updateDeck(shuffle(data));
     }
-
-    useEffect(() => {
-        if(score > highScore){setHighScore(score);}
-    }, [score]);
 
     return (
         <div className='game-board'>
             <Header score={score} highScore={highScore} />
             {
             !gameOver ?
-                <div className='deck'>{deck}</div> 
+                <div className='deck'>{deck.map(el => {
+                    return <Card image={el.image} text={el.text} takeTurn={takeTurn} key={el.id}/>
+                })}</div>
             : 
                 <GameOver score={score} highScore={highScore} reset={reset}
             />}
