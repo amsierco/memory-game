@@ -1,20 +1,16 @@
 import React, { useState } from "react";
 
-const Card = ({image, text='placeholder-text', takeTurn}) => {
-    const [selectedStatus, updateSelected] = useState(false);
+const Card = ({image, text, takeTurn}) => {
+    const [valid, updateStatus] = useState(true);
 
-    const handleClick = () => {
-        if(selectedStatus === true){
-            takeTurn(true);
-        } else {
-            updateSelected(true);
-            takeTurn(false);
-        }
+    const clickHandler = () => {
+        takeTurn(valid);
+        updateStatus(false);
     }
 
     return (
-        <button className="Card" onClick={handleClick}>
-            <img src={image} alt='card content'></img>
+        <button className="card" onClick={clickHandler}>
+            <img src={image} alt="" />
             <div>{text}</div>
         </button>
     );
