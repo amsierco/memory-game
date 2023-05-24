@@ -1,6 +1,6 @@
 import React from "react";
 
-const GameOver = ({score, highScore, reset}) => {
+const GameOver = ({score, highScore, reset, resetHighScore}) => {
     return(
         <div className="game-over">
             <div className="game-over-inner">
@@ -10,6 +10,8 @@ const GameOver = ({score, highScore, reset}) => {
                 <h3>High Score: {highScore}</h3>
                 <br />
                 <button onClick={reset}><h4>Play Again</h4></button>
+                <br />
+                <button onClick={resetHighScore}><h4>Reset High Score</h4></button>
             </div>
         </div>
     );

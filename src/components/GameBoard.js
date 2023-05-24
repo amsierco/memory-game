@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import GameOver from './GameOver';
 import Card from './Card';
@@ -7,7 +7,7 @@ import '../style.css';
 
 const GameBoard = (() => {
     const [score, setScore] = useState(0);
-    const [highScore, setHighScore] = useState(0);
+    const [highScore, setHighScore] = useState(localStorage.getItem('highScore') !== null ? parseInt(localStorage.getItem('highScore')) : 0);
     const [gameOver, endGame] = useState(false);
     const [deck, updateDeck] = useState(data);
 
@@ -40,6 +40,18 @@ const GameBoard = (() => {
         updateDeck(shuffle(data));
     }
 
+    function resetHighScore(){
+        localStorage.setItem('highScore', 0);
+        setHighScore(0);
+        reset();
+    }
+
+    useEffect(() => {
+        if(highScore){
+            localStorage.setItem('highScore', highScore);
+        }
+    }, [highScore])
+
     return (
         <div className='game-board'>
             <Header score={score} highScore={highScore} />
@@ -51,7 +63,7 @@ const GameBoard = (() => {
                     })}
                 </div>
             : 
-                <GameOver score={score} highScore={highScore} reset={reset}
+                <GameOver score={score} highScore={highScore} reset={reset} resetHighScore={resetHighScore}
             />}
         </div>
     );
